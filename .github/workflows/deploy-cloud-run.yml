@@ -55,22 +55,6 @@ jobs:
 
       - uses: google-github-actions/setup-gcloud@v2
 
-      - name: Enable APIs
-        run: |
-          gcloud services enable \
-            run.googleapis.com \
-            artifactregistry.googleapis.com \
-            iamcredentials.googleapis.com \
-            --quiet
-
-      - name: Ensure Artifact Registry repository
-        run: |
-          gcloud artifacts repositories describe "$REPOSITORY" --location="$REGION" \
-            || gcloud artifacts repositories create "$REPOSITORY" \
-              --repository-format=docker \
-              --location="$REGION" \
-              --description="ACME demo images"
-
       - name: Configure Docker for Artifact Registry
         run: gcloud auth configure-docker "$REGION-docker.pkg.dev" --quiet
 
